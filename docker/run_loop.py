@@ -104,7 +104,10 @@ def run_verifier(pass_num):
 def run_checker(pass_num, verifier_passed):
     print(f"[Pass {pass_num}] Running CHECKER (Adversarial QA Persona)...")
     contract = read_file("contract/CONTRACT.md")
-    verify_report = read_file("artifacts/verify_report.json")
+    if os.path.exists("artifacts/verify_report.json"):
+        verify_report = read_file("artifacts/verify_report.json")
+    else:
+        verify_report = json.dumps({"passed": False, "errors": ["Verifier script crashed before producing a report."]})
     git_diff = subprocess.check_output(["git", "diff", "HEAD~1", "HEAD", "--", TARGET_BLADE]).decode("utf-8")
 
     prompt = (
