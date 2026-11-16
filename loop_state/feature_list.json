@@ -1,17 +1,17 @@
 [
-    {
-        "id": "weather-header",
-        "description": "Dark slate background with centered 'London', large '8°', drizzle icon/label, and 'H:8° L:5°'",
-        "status": "pending"
-    },
-    {
-        "id": "hourly-forecast-card",
-        "description": "Rounded semi-transparent card 'HOURLY FORECAST' with horizontal columns from 'Now' to '10am'",
-        "status": "pending"
-    },
-    {
-        "id": "ten-day-forecast-card",
-        "description": "Rounded semi-transparent card '10-DAY FORECAST' with 10 rows ('Today' to 'Wed') and green/cyan range bars",
-        "status": "pending"
-    }
+  {
+    "id": "weather-header",
+    "description": "Dark slate background with centered 'London', large '8\u00b0', drizzle icon/label, and 'H:8\u00b0 L:5\u00b0'",
+    "status": "completed"
+  },
+  {
+    "id": "hourly-forecast-card",
+    "description": "Rounded semi-transparent card 'HOURLY FORECAST' with horizontal columns from 'Now' to '10am'",
+    "status": "completed"
+  },
+  {
+    "id": "ten-day-forecast-card",
+    "description": "Rounded semi-transparent card '10-DAY FORECAST' with 10 rows ('Today' to 'Wed') and green/cyan range bars",
+    "status": "completed"
+  }
 ]
