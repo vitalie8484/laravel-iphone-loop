@@ -10,3 +10,4 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --break-system-packages openai pillow
 
 WORKDIR /app
+RUN npm init -y && npm install playwright@1.50.0
