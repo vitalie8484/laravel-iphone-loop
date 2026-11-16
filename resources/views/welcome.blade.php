@@ -6,7 +6,7 @@
         <title>{{ config('app.name', 'Weather') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="min-h-screen text-white antialiased" style="background-color: #162032; background-image: linear-gradient(to bottom, #1e293b, #0f172a);">
+    <body class="min-h-screen text-white antialiased overflow-x-hidden" style="background-color: #162032; background-image: linear-gradient(to bottom, #1e293b, #0f172a);">
         <div class="max-w-[390px] mx-auto px-4 py-8 overflow-x-hidden">
 
             {{-- Current Weather Header --}}
