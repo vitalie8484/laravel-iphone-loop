@@ -6,7 +6,7 @@
         <title>{{ config('app.name', 'Weather') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
-            html, body { overflow-x: hidden; }
+            html, body { overflow-x: hidden; max-width: 100%; }
             body { background-color: #162032; }
         </style>
     </head>
