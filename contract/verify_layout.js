@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 
-const TARGET_URL = process.env.APP_URL || 'http://127.0.0.1:8000';
+const TARGET_URL = process.env.APP_URL || 'http://laravel-iphone-loop.test';
 const SCREENSHOT_PATH = process.env.SCREENSHOT_PATH || 'artifacts/actual.png';
 
 async function run() {

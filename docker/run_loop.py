@@ -91,20 +91,15 @@ REFERENCE UI LAYOUT SPECIFICATION (from contract/layout.png):
     print(f"[Pass {pass_num}] Worker committed changes to {TARGET_BLADE}.")
 
 def run_verifier(pass_num):
-    print(f"[Pass {pass_num}] Running DETERMINISTIC VERIFIER (Playwright)...")
-    server = subprocess.Popen(
-        ["php", "artisan", "serve", "--host=127.0.0.1", "--port=8000"],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-    time.sleep(2)
-    try:
-        result = subprocess.run(["node", "contract/verify_layout.js"], capture_output=True, text=True)
+    print(f"[Pass {pass_num}] Running DETERMINISTIC VERIFIER (Playwright -> {os.environ.get('APP_URL', 'http://laravel-iphone-loop.test/')})...")
+    if os.path.exists("artifacts/verify_report.json"):
+        os.remove("artifacts/verify_report.json")
+    result = subprocess.run(["node", "contract/verify_layout.js"], capture_output=True, text=True)
+    if result.stdout:
         print(result.stdout)
-        return result.returncode == 0
-    finally:
-        server.terminate()
-        server.wait()
+    if result.stderr:
+        print("VERIFIER STDERR:", result.stderr)
+    return result.returncode == 0
 
 def run_checker(pass_num, verifier_passed):
     print(f"[Pass {pass_num}] Running CHECKER (Adversarial QA Persona)...")
