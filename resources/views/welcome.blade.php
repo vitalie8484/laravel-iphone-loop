@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'Weather') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html, body { overflow-x: hidden; }
+            body { background-color: #162032; }
+        </style>
     </head>
     <body class="min-h-screen text-white antialiased" style="background-color: #162032; background-image: linear-gradient(to bottom, #1e293b, #0f172a);">
         <div class="max-w-[390px] mx-auto px-4 py-8 overflow-hidden">
