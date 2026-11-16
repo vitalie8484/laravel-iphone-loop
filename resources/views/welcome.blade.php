@@ -5,108 +5,62 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'Weather') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            html, body { background: #111c31; }
+            body { min-width: 0; }
+            .weather-cloud { filter: drop-shadow(0 12px 18px rgb(8 15 31 / 16%)); }
+            .forecast-scroll { scrollbar-width: none; }
+            .forecast-scroll::-webkit-scrollbar { display: none; }
+        </style>
     </head>
-    <body class="min-h-screen text-white antialiased overflow-x-hidden" style="background-color: #162032; background-image: linear-gradient(to bottom, #1e293b, #0f172a);">
-        <div class="max-w-[390px] mx-auto px-4 py-8 overflow-x-hidden">
-
-            {{-- Current Weather Header --}}
-            <div class="text-center">
-                <h1 class="text-2xl font-medium text-white">London</h1>
-                <div class="text-7xl font-thin text-white my-1">8&deg;</div>
-                <div class="flex items-center justify-center gap-2 text-base text-slate-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 19v1.5M12 19v1.5M16 19v1.5" />
-                    </svg>
-                    <span>Drizzle</span>
+    <body class="min-h-screen overflow-x-hidden bg-[#111c31] text-white antialiased">
+        <main class="mx-auto w-full max-w-[430px] overflow-hidden px-4 pb-8 pt-7 sm:max-w-[900px] sm:px-8 sm:pt-9">
+            <section class="relative flex min-h-[430px] flex-col items-center text-center">
+                <h1 class="relative z-10 text-[44px] font-light leading-none tracking-[-1.5px] sm:text-[58px]">London</h1>
+                <div class="relative mt-7 flex h-[270px] w-full max-w-[340px] items-start justify-center">
+                    <div class="absolute top-[45px] h-[138px] w-[218px] rounded-[76px] bg-[#657087]/75 weather-cloud"></div>
+                    <div class="absolute left-[56px] top-[22px] h-[118px] w-[118px] rounded-full bg-[#657087]/75 weather-cloud"></div>
+                    <div class="absolute right-[52px] top-[48px] h-[105px] w-[105px] rounded-full bg-[#657087]/75 weather-cloud"></div>
+                    <div class="relative z-10 text-[116px] font-thin leading-[.9] tracking-[-8px]">8°</div>
+                    <div class="absolute bottom-[54px] z-10 flex items-center gap-3 text-[34px] font-light text-slate-100"><span class="text-3xl">🌧</span><span>Drizzle</span></div>
+                    <div class="absolute bottom-[8px] z-10 text-[24px] font-medium text-slate-200">H:8° L:5°</div>
                 </div>
-                <div class="text-sm text-slate-300 mt-1">H:8&deg; L:5&deg;</div>
-            </div>
+            </section>
 
-            {{-- Hourly Forecast Card --}}
-            <div class="rounded-2xl bg-slate-800/60 backdrop-blur p-4 mt-6">
-                <div class="flex items-center gap-2 text-xs font-semibold tracking-wider text-slate-400 uppercase pb-3 border-b border-slate-700/60">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Hourly Forecast</span>
-                </div>
-                <div class="flex overflow-x-auto gap-5 pt-3">
-                    @php
-                        $hours = [
-                            ['time' => 'Now', 'temp' => '8°'],
-                            ['time' => '1am', 'temp' => '8°'],
-                            ['time' => '2am', 'temp' => '7°'],
-                            ['time' => '3am', 'temp' => '7°'],
-                            ['time' => '4am', 'temp' => '6°'],
-                            ['time' => '5am', 'temp' => '6°'],
-                            ['time' => '6am', 'temp' => '5°'],
-                            ['time' => '7am', 'temp' => '5°'],
-                            ['time' => '8am', 'temp' => '5°'],
-                            ['time' => '9am', 'temp' => '5°'],
-                            ['time' => '10am', 'temp' => '6°'],
-                        ];
-                    @endphp
+            @php
+                $hours = [
+                    ['time' => 'Now', 'temp' => '8°', 'icon' => 'rain'], ['time' => '1am', 'temp' => '8°', 'icon' => 'rain'], ['time' => '2am', 'temp' => '7°', 'icon' => 'rain'], ['time' => '3am', 'temp' => '7°', 'icon' => 'moon'], ['time' => '4am', 'temp' => '6°', 'icon' => 'rain'], ['time' => '5am', 'temp' => '6°', 'icon' => 'moon'], ['time' => '6am', 'temp' => '5°', 'icon' => 'moon'], ['time' => '7am', 'temp' => '5°', 'icon' => 'moon'], ['time' => '8am', 'temp' => '5°', 'icon' => 'sun'], ['time' => '9am', 'temp' => '5°', 'icon' => 'partly'], ['time' => '10am', 'temp' => '6°', 'icon' => 'sun'],
+                ];
+                $days = [
+                    ['day' => 'Today', 'low' => 5, 'high' => 8, 'icon' => 'rain'], ['day' => 'Tue', 'low' => 6, 'high' => 13, 'icon' => 'rain'], ['day' => 'Wed', 'low' => 9, 'high' => 12, 'icon' => 'rain'], ['day' => 'Thu', 'low' => 6, 'high' => 9, 'icon' => 'rain'], ['day' => 'Fri', 'low' => 7, 'high' => 10, 'icon' => 'rain'], ['day' => 'Sat', 'low' => 6, 'high' => 13, 'icon' => 'rain'], ['day' => 'Sun', 'low' => 5, 'high' => 12, 'icon' => 'rain'], ['day' => 'Mon', 'low' => 2, 'high' => 7, 'icon' => 'partly'], ['day' => 'Tue', 'low' => 0, 'high' => 4, 'icon' => 'partly'], ['day' => 'Wed', 'low' => 1, 'high' => 5, 'icon' => 'partly'],
+                ];
+                $minTemp = 0; $maxTemp = 13; $range = $maxTemp - $minTemp;
+            @endphp
+
+            <section class="rounded-[30px] border border-white/20 bg-[#354157]/80 p-4 shadow-[0_12px_30px_rgb(4_10_26/14%)] backdrop-blur sm:p-8">
+                <div class="flex items-center gap-3 border-b border-white/15 pb-4 text-[17px] font-semibold uppercase tracking-[.8px] text-slate-300"><span class="text-[25px] leading-none">◷</span><span>Hourly Forecast</span></div>
+                <div class="forecast-scroll flex gap-7 overflow-x-auto pt-6 pb-1 sm:justify-between sm:gap-4">
                     @foreach ($hours as $hour)
-                        <div class="flex flex-col items-center gap-2 shrink-0">
-                            <span class="text-xs text-slate-300">{{ $hour['time'] }}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 19v1.5M12 19v1.5M16 19v1.5" />
-                            </svg>
-                            <span class="text-sm font-medium text-white">{{ $hour['temp'] }}</span>
+                        <div class="flex min-w-[43px] shrink-0 flex-col items-center gap-6">
+                            <span class="text-[18px] text-slate-300">{{ $hour['time'] }}</span>
+                            @if ($hour['icon'] === 'moon') <span class="text-[38px] leading-none text-[#79cbe5]">☾</span>@elseif ($hour['icon'] === 'sun') <span class="text-[39px] leading-none text-amber-400">☀</span>@elseif ($hour['icon'] === 'partly') <span class="text-[31px] leading-none">🌤</span>@else <span class="text-[30px] leading-none">🌧</span>@endif
+                            <span class="text-[23px] font-medium text-white">{{ $hour['temp'] }}</span>
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </section>
 
-            {{-- 10-Day Forecast Card --}}
-            <div class="rounded-2xl bg-slate-800/60 backdrop-blur p-4 mt-4">
-                <div class="flex items-center gap-2 text-xs font-semibold tracking-wider text-slate-400 uppercase pb-2 border-b border-slate-700/60">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                    </svg>
-                    <span>10-Day Forecast</span>
-                </div>
-                @php
-                    $days = [
-                        ['day' => 'Today', 'low' => 5, 'high' => 8],
-                        ['day' => 'Tue', 'low' => 6, 'high' => 13],
-                        ['day' => 'Wed', 'low' => 9, 'high' => 12],
-                        ['day' => 'Thu', 'low' => 6, 'high' => 9],
-                        ['day' => 'Fri', 'low' => 7, 'high' => 10],
-                        ['day' => 'Sat', 'low' => 6, 'high' => 13],
-                        ['day' => 'Sun', 'low' => 5, 'high' => 12],
-                        ['day' => 'Mon', 'low' => 2, 'high' => 7],
-                        ['day' => 'Tue', 'low' => 0, 'high' => 4],
-                        ['day' => 'Wed', 'low' => 1, 'high' => 5],
-                    ];
-                    $minTemp = 0;
-                    $maxTemp = 13;
-                    $range = $maxTemp - $minTemp;
-                @endphp
+            <section class="mt-8 rounded-[30px] border border-white/20 bg-[#354157]/80 p-4 shadow-[0_12px_30px_rgb(4_10_26/14%)] backdrop-blur sm:p-8">
+                <div class="flex items-center gap-3 border-b border-white/15 pb-4 text-[17px] font-semibold uppercase tracking-[.8px] text-slate-300"><span class="text-[23px] leading-none">▣</span><span>10-Day Forecast</span></div>
                 <div>
-                    @foreach ($days as $index => $day)
-                        @php
-                            $leftPct = (($day['low'] - $minTemp) / $range) * 100;
-                            $widthPct = (($day['high'] - $day['low']) / $range) * 100;
-                        @endphp
-                        <div class="flex items-center gap-3 py-2.5 {{ $index < count($days) - 1 ? 'border-b border-slate-700/50' : '' }}">
-                            <span class="w-14 font-medium text-sm text-white">{{ $day['day'] }}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-slate-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 19v1.5M12 19v1.5M16 19v1.5" />
-                            </svg>
-                            <span class="w-8 text-sm text-slate-400">{{ $day['low'] }}&deg;</span>
-                            <div class="flex-1 h-1.5 bg-slate-700 rounded-full relative">
-                                <div class="absolute h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-green-400" style="left: {{ $leftPct }}%; width: {{ $widthPct }}%;"></div>
-                            </div>
-                            <span class="w-8 text-right text-sm font-medium text-white">{{ $day['high'] }}&deg;</span>
+                    @foreach ($days as $day)
+                        @php $leftPct = (($day['low'] - $minTemp) / $range) * 100; $widthPct = (($day['high'] - $day['low']) / $range) * 100; @endphp
+                        <div class="grid grid-cols-[58px_34px_32px_minmax(0,1fr)_32px] items-center gap-2 border-b border-white/10 py-5 last:border-b-0 sm:grid-cols-[70px_40px_38px_minmax(0,1fr)_38px] sm:gap-3">
+                            <span class="text-[20px] font-medium text-white sm:text-[24px]">{{ $day['day'] }}</span><span class="text-[23px]">{{ $day['icon'] === 'partly' ? '🌤' : '🌧' }}</span><span class="text-[19px] text-white">{{ $day['low'] }}°</span><div class="relative h-3 rounded-full bg-slate-500/70"><div class="absolute h-3 rounded-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-lime-400" style="left: {{ $leftPct }}%; width: {{ $widthPct }}%;"></div></div><span class="text-right text-[19px] font-medium text-white">{{ $day['high'] }}°</span>
                         </div>
                     @endforeach
                 </div>
-            </div>
-
-        </div>
+            </section>
+        </main>
     </body>
 </html>
